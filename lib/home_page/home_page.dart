@@ -6,6 +6,7 @@ import 'package:flutter_application_1/home_page/model_data.dart';
 import 'package:flutter_application_1/home_page/response_data.dart';
 import 'package:flutter_application_1/home_page/why_give_me_widget.dart';
 import 'package:flutter_application_1/list_page/list_page.dart';
+import 'package:flutter_application_1/profile_page/profile_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -37,9 +38,18 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 10),
-            child: CircleAvatar(
-              backgroundColor: Colors.transparent,
-              child: Icon(Icons.person),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              },
+              child: CircleAvatar(
+                radius: 25,
+                backgroundColor: Colors.transparent,
+                child: Icon(Icons.person, size: 35),
+              ),
             ),
           ),
         ],
@@ -204,8 +214,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 return WhyGiveMeWidget(modelData: data);
               }).toList(),
               options: CarouselOptions(
+                viewportFraction: 1,
                 autoPlay: true,
-                height: 150,
+                height: 160,
                 autoPlayInterval: Duration(seconds: 5),
                 enlargeFactor: 0.5,
               ),

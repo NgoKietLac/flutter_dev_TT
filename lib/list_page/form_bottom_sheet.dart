@@ -51,7 +51,7 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
         child: Form(
           key: formKey,
           child: Column(
-            spacing: 20,
+            spacing: 10,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -65,7 +65,15 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                   return null;
                 },
                 controller: titleController,
-                decoration: InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFF2563EB),
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
               ),
               Text("Mô tả: "),
               TextFormField(
@@ -76,7 +84,15 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                   return null;
                 },
                 controller: descriptionController,
-                decoration: InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFF2563EB),
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
               ),
               Text("Tiền"),
               TextFormField(
@@ -89,7 +105,15 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                   return null;
                 },
                 controller: moneyController,
-                decoration: InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFF2563EB),
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
               ),
               Text("Ngày Thực hiện: "),
               TextFormField(
@@ -120,9 +144,21 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                   return null;
                 },
                 controller: dateController,
-                decoration: InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFF2563EB),
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF2563EB),
+                  minimumSize: Size.fromHeight(50),
+                ),
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     widget.onSave(
@@ -139,7 +175,9 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text("Save")],
+                  children: [
+                    Text("Save", style: TextStyle(color: Colors.white)),
+                  ],
                 ),
               ),
             ],

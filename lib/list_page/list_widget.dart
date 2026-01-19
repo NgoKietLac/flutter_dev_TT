@@ -17,15 +17,23 @@ class _ListWidgetState extends State<ListWidget> {
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 212, 209, 209),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 10),
+        ],
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Column(children: [Text(widget.statement.id.toString())]),
-          SizedBox(width: 30),
+          Icon(
+            Icons.arrow_circle_up,
+            size: 50,
+            fontWeight: FontWeight.w100,
+            color: Colors.green,
+          ),
+          SizedBox(width: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,7 +46,10 @@ class _ListWidgetState extends State<ListWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(widget.statement.money),
+              Text(
+                widget.statement.money,
+                style: TextStyle(color: Colors.green),
+              ),
               Checkbox(
                 value: isChecked,
                 onChanged: (bool? value) {

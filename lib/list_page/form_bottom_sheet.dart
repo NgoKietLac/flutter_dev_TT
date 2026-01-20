@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/list_page/statement.dart';
 
 void showFormBottonSheet(
   BuildContext context, {
+  Statement? initialData,
   required Function(
     String tiltle,
     String description,
@@ -15,14 +17,14 @@ void showFormBottonSheet(
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context) {
-      return FormBottomSheet(onSave: onSave);
+      return FormBottomSheet(onSave: onSave, initialData: initialData);
     },
   );
 }
 
 class FormBottomSheet extends StatefulWidget {
-  const FormBottomSheet({super.key, required this.onSave});
-
+  const FormBottomSheet({super.key, required this.onSave, this.initialData});
+  final Statement? initialData;
   final Function(String title, String description, String money, String date)
   onSave;
 
@@ -36,6 +38,17 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
   final moneyController = TextEditingController();
   final dateController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialData != null) {
+      titleController.text = widget.initialData!.tiltle;
+      descriptionController.text = widget.initialData!.description;
+      moneyController.text = widget.initialData!.money;
+      dateController.text = widget.initialData!.date;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,14 +182,23 @@ class _FormBottomSheetState extends State<FormBottomSheet> {
                     );
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Thêm Sao Kê Thành Công')),
+                      SnackBar(
+                        content: Text(
+                          widget.initialData == null
+                              ? 'Thêm Sao Kê Thành Công'
+                              : "Cập Nhập thành Công",
+                        ),
+                      ),
                     );
                   }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Save", style: TextStyle(color: Colors.white)),
+                    Text(
+                      widget.initialData == null ? "Save" : "Update",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ],
                 ),
               ),

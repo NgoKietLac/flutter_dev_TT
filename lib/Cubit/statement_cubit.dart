@@ -1,26 +1,32 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_application_1/Cubit/manager_state.dart';
 import 'package:flutter_application_1/list_page/statement.dart';
-import 'package:flutter_application_1/service/storage_service.dart';
+
+import '../service/service.dart';
 
 class StatementCubit extends Cubit<ManagerState> {
-  StatementCubit() : super(ManagerState());
+  StatementCubit(this.service) : super(ManagerState());
+
+  final Service service;
 
   Future<void> loadData() async {
     emit(state.copyWith(isLoading: true));
-    List<Statement> savedData = await StorageService.loadStatements();
+    List<Statement> savedData = await service.loadStatements();
     emit(state.copyWith(statements: savedData, isLoading: false));
   }
 
   Future<void> addStatement(
     String title,
     String desc,
-    String money, 
+    String money,
     String date,
   ) async {
     int newId = state.statements.isEmpty
         ? 0
-        : state.statements.map((e) => e.id).reduce((a, b) => a > b ? a : b) + 1;
+        : state.statements
+                  .map((Statement item) => item.id)
+                  .reduce((a, b) => a > b ? a : b) +
+              1;
 
     final newItem = Statement(
       id: newId,
@@ -32,15 +38,30 @@ class StatementCubit extends Cubit<ManagerState> {
     final updatedList = List<Statement>.from(state.statements)..add(newItem);
     emit(state.copyWith(statements: updatedList));
 
-    await StorageService.saveStatements(updatedList);
+    await service.saveStatements(updatedList);
   }
 
   Future<void> deleteStatement(int id) async {
-    final updatedList = state.statements
-        .where((item) => item.id != id)
-        .toList();
-    emit(state.copyWith(statements: updatedList));
-  
-    await StorageService.saveStatements(updatedList);
+    await service.deleteStatement(id);
+    loadData();
+  }
+
+  Future<void> updateStatement(
+    int id,
+    String title,
+    String desc,
+    String money,
+    String date,
+  ) async {
+    final updatedItem = Statement(
+      id: id,
+      tiltle: title,
+      description: desc,
+      money: money,
+      date: date,
+    );
+    await service.updateStatement(updatedItem);
+    final newList = await service.loadStatements();
+    emit(state.copyWith(statements: newList));
   }
 }

@@ -89,7 +89,7 @@ class ProfilePage extends StatelessWidget {
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                           Text(
-                            "500K",
+                            "490K",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
